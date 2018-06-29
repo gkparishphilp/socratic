@@ -3,13 +3,17 @@ class SocraticMigration < ActiveRecord::Migration[5.1]
 	def change
 		
 		create_table 	:socratic_surveys, force: true do |t|
-			t.string	:title
-			t.string	:slug
-			t.tiemstamps
+			t.string		:title
+			t.text 			:description
+			t.string 		:survey_type
+			t.integer 		:status, 			default: 1
+			t.string		:slug
+			t.timestamps
 		end
 
 		create_table 	:socratic_surveyings, force: true do |t|
 			t.references 	:user
+			t.references 	:survey
 			t.references 	:current_question
 			t.references 	:furthest_question
 			t.integer 		:score
@@ -28,7 +32,7 @@ class SocraticMigration < ActiveRecord::Migration[5.1]
 			t.timestamps
 		end
 
-		create_table 	:prompts, force: true do |t|
+		create_table 	:socratic_prompts, force: true do |t|
 			t.references 	:question_id
 			t.string 		:prompt_type, default: :radio
 			t.text 			:content
@@ -38,13 +42,13 @@ class SocraticMigration < ActiveRecord::Migration[5.1]
 			t.timestamps
 		end
 
-		create_table 	:responses, force: true do |t|
+		create_table 	:socratic_responses, force: true do |t|
 			t.references 	:user
 			t.references 	:surveying
 			t.references 	:question
 			t.references 	:prompt
 			t.text 			:content
-			t.dateime 		:started_at
+			t.datetime 		:started_at
 			t.datetime 		:completed_at
 			t.timestamps
 		end

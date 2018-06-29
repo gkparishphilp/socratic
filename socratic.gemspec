@@ -7,16 +7,17 @@ require "socratic/version"
 Gem::Specification.new do |s|
   s.name        = "socratic"
   s.version     = Socratic::VERSION
-  s.authors     = ["Gk Parish-Philp"]
+  s.authors     = ["Gk Parish-Philp", "Michael Ferguson"]
   s.email       = ["gk@gkparishphilp.com"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Socratic."
-  s.description = "TODO: Description of Socratic."
+  s.homepage    = "http://www.groundswellenterprises.com"
+  s.summary     = "A survey engine for rails"
+  s.description = "A survey engine for rails"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
   s.add_dependency "rails", "~> 5.1.6"
+  s.add_dependency "swell_media"
 
   s.add_development_dependency "sqlite3"
 end
