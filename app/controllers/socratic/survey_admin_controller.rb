@@ -16,6 +16,12 @@ module Socratic
 			@surveys = Survey.all.page( params[:page] )
 		end
 
+		def update
+			@survey = Survey.friendly.find( params[:id] )
+			@survey.update( survey_params )
+			redirect_back fallback_location: '/survey_admin'
+		end
+
 
 		private
 

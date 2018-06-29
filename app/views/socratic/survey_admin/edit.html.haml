@@ -1,0 +1,43 @@
+
+
+.container-fluid
+	.row
+		.col-xs-10
+			%ul.breadcrumb
+				%li
+					%a{ href: '/admin' }
+						Admin
+				%li
+					= link_to 'Survey Admin', survey_admin_index_path
+				%li
+					%strong
+						Edit
+						= @survey.title
+		.col-xs-2
+			%a.btn.btn-danger{ href: survey_admin_path, data: { method: :delete, confirm: 'Are you sure?' } }
+				%i.fa.fa-trash
+				Delete
+
+	= form_for @survey, url: survey_admin_path( @survey ) do |f|
+
+		.row
+			.col-xs-8
+				.form-group
+					= f.text_field :title, class: 'form-control input-lg'
+
+
+				.form-group
+					= f.label :description, 'Description'
+					= f.text_area :description, class: 'form-control wysiwyg', data: { wysiwyg: { height_min: 100, toolbar_sticky: true, toolbar_preset: 'admin_default' }.to_json }
+
+
+
+			.col-xs-4
+				.well
+
+					-#.form-group
+						= f.label :status
+						= f.collection_select :status, Survey.statuses, :first, :first, {}, class: 'form-control'
+
+					.form-group
+						= f.submit 'Update', class: 'btn btn-primary'
