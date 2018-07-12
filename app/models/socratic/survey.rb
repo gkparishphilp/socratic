@@ -1,7 +1,10 @@
 module Socratic
 	class Survey < ApplicationRecord
-		has_many 		:questions
-		has_many 		:surveyings
+
+		enum status: { 'draft' => 0, 'active' => 1, 'archive' => 3, 'trash' => 9 }
+
+		has_many 		:questions, dependent: :destroy
+		has_many 		:surveyings, dependent: :destroy
 
 
 		include FriendlyId

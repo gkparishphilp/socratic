@@ -30,14 +30,46 @@
 					= f.label :description, 'Description'
 					= f.text_area :description, class: 'form-control wysiwyg', data: { wysiwyg: { height_min: 100, toolbar_sticky: true, toolbar_preset: 'admin_default' }.to_json }
 
+				.row#questions
+					.col-xs-12
+						.well.white-well
+							%a.pull-right.btn.btn-success{ href: '#new_question', data: { toggle: :modal, target: '#new_question' } }
+								%i.fa.fa-plus
+								Add Question
+							%h4
+								Questions
+
+							%table.table.table-light.table-bordered{ style: 'margin:0;' }
+								%thead
+									%th{ style: 'width: 6em' } Seq
+									%th Label
+									%th Content
+									%th{ style: 'width: 10em' }
+								%tbody
+									- if @survey.questions.empty?
+										%tr
+											%td{ colspan: 4 }
+												\- No Questions -
+									- @survey.questions.order( seq: :asc ).each do |question|
+										%tr
+											%td
+												= question.seq
+											%td
+												= question.label
+											%td
+												= link_to question.content, edit_question_admin_path( question )
+											%td
+
 
 
 			.col-xs-4
 				.well
 
-					-#.form-group
+					.form-group
 						= f.label :status
-						= f.collection_select :status, Survey.statuses, :first, :first, {}, class: 'form-control'
+						= f.collection_select :status, Socratic::Survey.statuses, :first, :first, {}, class: 'form-control'
 
 					.form-group
 						= f.submit 'Update', class: 'btn btn-primary'
+
+= render 'socratic/question_admin/new_modal', args: { survey_id: @survey.id }

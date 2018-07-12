@@ -1,0 +1,18 @@
+#new_prompt.modal.fade
+	.modal-dialog
+		.modal-content
+			.modal-header
+				%button.close{ type: :button, 'data-dismiss' => 'modal', 'aria-hidden' => 'true' }
+					&times;
+				%h4.modal-title
+					New Prompt
+			= form_for Socratic::Prompt.new, url: prompt_admin_index_path do |f|
+				= f.hidden_field :question_id, value: args[:question_id]
+				.modal-body
+					= f.label :content
+					= f.text_field :content, class: 'form-control'
+
+				.modal-footer
+					%button.btn.btn-default{ type: :button, 'data-dismiss' => 'modal' }
+						Close
+					= f.submit 'Create', class: 'btn btn-primary'
