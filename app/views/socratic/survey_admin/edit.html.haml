@@ -2,7 +2,7 @@
 
 .container-fluid
 	.row
-		.col-xs-10
+		.col-xs-8
 			%ul.breadcrumb
 				%li
 					%a{ href: '/admin' }
@@ -13,8 +13,13 @@
 					%strong
 						Edit
 						= @survey.title
-		.col-xs-2
-			%a.btn.btn-danger{ href: survey_admin_path, data: { method: :delete, confirm: 'Are you sure?' } }
+
+		.col-xs-4
+			%a.btn.btn-info{ href: responses_survey_admin_path( @survey ) }
+				= pluralize @survey.surveyings.count, 'Response'
+				%i.fa.fa-eye
+
+			%a.btn.btn-danger.pull-right{ href: survey_admin_path, data: { method: :delete, confirm: 'Are you sure?' } }
 				%i.fa.fa-trash
 				Delete
 
@@ -30,38 +35,6 @@
 					= f.label :description, 'Description'
 					= f.text_area :description, class: 'form-control wysiwyg', data: { wysiwyg: { height_min: 100, toolbar_sticky: true, toolbar_preset: 'admin_default' }.to_json }
 
-				.row#questions
-					.col-xs-12
-						.well.white-well
-							%a.pull-right.btn.btn-success{ href: '#new_question', data: { toggle: :modal, target: '#new_question' } }
-								%i.fa.fa-plus
-								Add Question
-							%h4
-								Questions
-
-							%table.table.table-light.table-bordered{ style: 'margin:0;' }
-								%thead
-									%th{ style: 'width: 6em' } Seq
-									%th Label
-									%th Content
-									%th{ style: 'width: 10em' }
-								%tbody
-									- if @survey.questions.empty?
-										%tr
-											%td{ colspan: 4 }
-												\- No Questions -
-									- @survey.questions.order( seq: :asc ).each do |question|
-										%tr
-											%td
-												= question.seq
-											%td
-												= question.label
-											%td
-												= link_to question.content, edit_question_admin_path( question )
-											%td
-
-
-
 			.col-xs-4
 				.well
 
@@ -72,4 +45,84 @@
 					.form-group
 						= f.submit 'Update', class: 'btn btn-primary'
 
-= render 'socratic/question_admin/new_modal', args: { survey_id: @survey.id }
+	.row#questions
+		.col-sm-12
+			.well.white-well
+				%h4
+					Questions
+
+				%table.table.table-light.table-bordered{ style: 'margin:0;' }
+					%thead
+						%th{ style: 'width: 4em' } Seq
+						%th Content
+						%th Title
+						
+						%th
+							UI
+						%th
+							Req?
+						%th{ style: 'width: 4em' }
+						%th{ style: 'width: 4em' }
+					%tbody
+						- if @survey.questions.empty?
+							%tr
+								%td{ colspan: 4 }
+									\- No Questions -
+
+						- @survey.questions.order( seq: :asc ).each do |question|
+							= form_for question, url: question_admin_path( question ) do |f|
+								%tr
+									%td
+										= f.text_field :seq, class: 'form-control'
+									%td
+										= f.text_field :content, class: 'form-control'
+									%td
+										= f.text_field :title, class: 'form-control'
+									
+									%td
+										= f.select :question_ui, options_for_select( Socratic::Question.uis, question.question_ui ), {}, class: 'form-control'
+									%td
+										= f.check_box :is_required, class: 'form-control'
+									%td
+										= f.submit 'Update', class: 'btn btn-small'
+									
+									%td
+										.btn-group
+											%button.btn.btn-mini.btn-default.dropdown-toggle{ data: { toggle: :dropdown } }
+												%i.fa.fa-cog
+												%b.caret
+											%ul.dropdown-menu
+												%li
+													%a{ href: edit_question_admin_path( question ) }
+														%i.fa.fa-pencil
+														Edit
+												%li.divider
+												%li
+													%a{ href: question_admin_path( question ), data: { method: 'delete', confirm: 'Are you sure?' } }
+														%i.fa.fa-trash-o
+														Delete!
+
+						%tr
+							%td{ colspan: 4 }
+			
+						= form_for Socratic::Question.new( survey: @survey ), url: question_admin_index_path do |f|
+							= f.hidden_field :survey_id
+							%tr
+								%td
+									= f.text_field :seq, class: 'form-control'
+								%td
+									= f.text_field :content, class: 'form-control'
+								%td
+									= f.text_field :title, class: 'form-control'
+								
+								%td
+									= f.select :question_ui, options_for_select( Socratic::Question.uis ), {}, class: 'form-control'
+								%td
+									= f.check_box :is_required, class: 'form-control'
+								%td
+									= f.submit 'Add', class: 'btn btn-primary'
+
+
+
+
+

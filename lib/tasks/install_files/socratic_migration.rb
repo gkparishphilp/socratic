@@ -26,9 +26,9 @@ class SocraticMigration < ActiveRecord::Migration[5.1]
 
 		create_table 	:socratic_questions, force: true do |t|
 			t.references 	:survey
-			t.string 		:label 
+			t.string 		:title
 			t.text 			:content
-			t.string 		:question_type
+			t.string 		:question_ui, default: :text_box # text-area, radio, check-box, radio-other, check-box-other, select
 			t.integer 		:seq
 			t.boolean		:is_required
 			t.string 		:slug
@@ -39,7 +39,7 @@ class SocraticMigration < ActiveRecord::Migration[5.1]
 
 		create_table 	:socratic_prompts, force: true do |t|
 			t.references 	:question
-			t.string 		:prompt_type, default: :radio
+			t.string 		:prompt_ui
 			t.text 			:content
 			t.integer 		:seq
 			t.integer 		:value
@@ -54,6 +54,7 @@ class SocraticMigration < ActiveRecord::Migration[5.1]
 			t.references 	:question
 			t.references 	:prompt
 			t.text 			:content
+			t.text 			:notes
 			t.datetime 		:started_at
 			t.datetime 		:completed_at
 			t.timestamps

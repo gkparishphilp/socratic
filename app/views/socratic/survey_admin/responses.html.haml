@@ -1,0 +1,56 @@
+
+
+.container-fluid
+	.row
+		.col-xs-10
+			%ul.breadcrumb
+				%li
+					%a{ href: '/admin' }
+						Admin
+				%li
+					= link_to 'Survey Admin', survey_admin_index_path
+				%li
+					%a{ href: edit_survey_admin_path( @survey ) }
+						Edit
+						= @survey.title
+				%li
+					%strong
+						Responses
+		.col-xs-2
+		
+
+
+	.row
+		.col-xs-12
+			%table.table
+				%thead
+					- @survey.questions.order( seq: :asc ).limit( 10 ).each do |question|
+						%th
+							= question.label
+				%tbody
+					- @survey.surveyings.order( created_at: :desc ).each do |surveying|
+						%tr
+							- @survey.questions.order( seq: :asc ).limit( 10 ).each do |question|
+								%td
+									= surveying.responses.where( question: question ).last.content
+							%td
+								.btn-group
+									%button.btn.btn-mini.btn-default.dropdown-toggle{ data: { toggle: :dropdown } }
+										%i.fa.fa-cog
+										%b.caret
+									%ul.dropdown-menu
+										%li
+											%a{ href: surveying_admin_path( surveying ) }
+												%i.fa.fa-eye
+												View
+										%li.divider
+										%li
+											%a{ href: surveying_admin_path( surveying ), data: { method: 'delete', confirm: 'Are you sure?' } }
+												%i.fa.fa-trash-o
+												Delete!
+				
+					
+
+
+
+

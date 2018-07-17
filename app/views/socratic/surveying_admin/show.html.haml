@@ -1,0 +1,45 @@
+
+
+.container-fluid
+	.row
+		.col-xs-10
+			%ul.breadcrumb
+				%li
+					%a{ href: '/admin' }
+						Admin
+				%li
+					= link_to 'Survey Admin', survey_admin_index_path
+				%li
+					%a{ href: edit_survey_admin_path( @survey ) }
+						Edit
+						= @survey.title
+				%li
+					%a{ href: responses_survey_admin_path( @survey ) }
+						Responses
+				%li
+					View Response
+
+		.col-xs-2
+		
+
+
+	.row
+		.col-xs-12
+			%table.table
+				%thead
+					%th
+					%th
+				%tbody
+					- @survey.questions.each do |question|
+						%tr
+							%td{ style: 'width: 20em;' }
+								= question.label
+							
+							%td
+								= @surveying.responses.where( question: question ).last.content
+
+					
+
+
+
+

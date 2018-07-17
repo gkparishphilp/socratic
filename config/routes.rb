@@ -1,11 +1,16 @@
 Socratic::Engine.routes.draw do
 
 	resources 	:question_admin
-	resources 	:survey_admin
+	resources 	:survey_admin do 
+		get :responses, on: :member
+	end
 
 	resources 	:prompt_admin # just admin
 
-	resources 	:response, only: :create # to record responses one at a time
-	resources	:survey_response, only: :create
+	resources :surveying_admin
+
+	resources 	:responses do
+		post :batch, on: :collection
+	end
 
 end

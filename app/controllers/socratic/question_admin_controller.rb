@@ -4,9 +4,11 @@ module Socratic
 		before_action :get_question, except: :create
 
 		def create
-			@question = Question.new( question_attributes )
+			@question = Question.new( question_params )
+
 			@question.save
-			redirect_to edit_question_admin_path( @question )
+			redirect_back fallback_location:  edit_question_admin_path( @question )
+			#redirect_to edit_question_admin_path( @question )
 		end
 
 		def destroy
@@ -20,16 +22,16 @@ module Socratic
 
 		def update
 			@question.update( question_params )
-			redirect_back fallback_location: survey_admin_edit_path( question.survey )
+			redirect_back fallback_location: edit_survey_admin_path( @question.survey )
 		end
 
 		private
 			def get_question
-				@question = Question.find params[:id]
+				@question = Question.friendly.find params[:id]
 			end
 
-			def question_attributes
-				params.require( :question ).permit( :survey_id, :label, :content, :question_type, :seq, :is_required )
+			def question_params
+				params.require( :question ).permit( :survey_id, :title, :content, :question_ui, :seq, :is_required )
 			end
 
 	end

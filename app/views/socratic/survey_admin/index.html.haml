@@ -38,20 +38,23 @@
 						%a{ href: survey_admin_index_path( sort_by: 'title', sort_dir: 'desc' ) }
 							%i.fa.fa-arrow-down
 					
+					
+					%th Responses
 					%th Created
-					%th
+					
 					%th
 				%tbody
 					- @surveys.each do |survey|
 						%tr
 						
 							%td
-								.title{ style: 'font-size:120%;' }= link_to survey.title, edit_survey_admin_path(survey.id )
+								.title{ style: 'font-size:120%;' }= link_to survey.title, edit_survey_admin_path( survey.id )
 								
 							%td
-								= survey.created_at
+								= link_to survey.surveyings.count, responses_survey_admin_path( survey )
 							%td
-								= survey.surveyings.count
+								= survey.created_at
+							
 							%td
 								.btn-group
 									%button.btn.btn-mini.btn-default.dropdown-toggle{ data: { toggle: :dropdown } }
