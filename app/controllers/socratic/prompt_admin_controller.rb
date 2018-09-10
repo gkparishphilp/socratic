@@ -1,5 +1,5 @@
 module Socratic
-	class PromptAdminController < SwellMedia::AdminController
+	class PromptAdminController < ApplicationAdminController
 
 		def create
 			@prompt = Prompt.new( prompt_params )

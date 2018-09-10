@@ -1,5 +1,5 @@
 module Socratic
-	class SurveyingAdminController < SwellMedia::AdminController
+	class SurveyingAdminController < ApplicationAdminController
 
 		def show
 			@surveying = Surveying.find( params[:id] )

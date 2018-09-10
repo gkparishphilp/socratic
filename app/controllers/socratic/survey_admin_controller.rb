@@ -1,5 +1,5 @@
 module Socratic
-	class SurveyAdminController < SwellMedia::AdminController
+	class SurveyAdminController < ApplicationAdminController
 
 		before_action :get_survey, except: [ :create, :index ]
 
