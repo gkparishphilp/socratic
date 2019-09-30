@@ -1,5 +1,5 @@
 module Socratic
-	class QuestionAdminController < SwellMedia::AdminController
+	class QuestionAdminController < ApplicationAdminController
 
 		before_action :get_question, except: :create
 
