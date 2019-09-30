@@ -1,8 +1,18 @@
 class SocraticMigration < ActiveRecord::Migration[5.1]
 
 	def change
+
+		create_table 	:socratic_pages do |t|
+			t.references 	:survey
+			t.string 		:title
+			t.text			:description
+			t.text			:content
+			t.integer		:status	
+		end
+		add_index :socratic_pages, :status
 		
 		create_table 	:socratic_surveys, force: true do |t|
+			t.references 	:parent_obj, polymorphic: true
 			t.string		:title
 			t.text 			:description
 			t.string 		:survey_type
@@ -26,12 +36,15 @@ class SocraticMigration < ActiveRecord::Migration[5.1]
 
 		create_table 	:socratic_questions, force: true do |t|
 			t.references 	:survey
+			t.refereces 	:page
 			t.string 		:title
 			t.text 			:content
 			t.string 		:question_ui, default: :text_box # text-area, radio, check-box, radio-other, check-box-other, select
 			t.integer 		:seq
 			t.boolean		:is_required
 			t.string 		:slug
+			t.string 		:question_group
+			t.string 		:bind_data_field
 			t.timestamps
 		end
 		add_index :socratic_questions, [ :survey_id, :seq ]

@@ -6,4 +6,5 @@ module Socratic
 			@survey = @surveying.survey
 		end
 	end
+	
 end

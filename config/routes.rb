@@ -10,7 +10,7 @@ Socratic::Engine.routes.draw do
 	resources :surveying_admin
 
 	resources 	:responses do
-		post :batch, on: :collection
+		post :save_batch, on: :collection
 	end
 
 end

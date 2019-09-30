@@ -7,13 +7,25 @@ module Socratic
 		end
 
 
-		def batch
+		def save_batch
 			# record multiple responses for a survey
 
 			unlocked_params = params.to_unsafe_h
-
 			@survey = Survey.find( unlocked_params[:survey_id] )
-			@user = User.find_or_create_by( email:unlocked_params[:responses][:email][:content].downcase )
+
+			@email = nil
+
+			if unlocked_params[:responses][:email].present?
+				@email = unlocked_params[:responses][:email][:content].downcase
+				@user = User.find_or_create_by( email: @email )
+			end
+
+			@pw = nil
+			if unlocked_params[:responses][:password].present?
+				@user.password = unlocked_params[:responses][:password][:content]
+				@user.save
+				unlocked_params[:responses].delete!( :password )
+			end
 
 			@surveying = @survey.surveyings.find_or_create_by( user: @user )
 			

@@ -1,6 +1,7 @@
 module Socratic
 	class Question < ApplicationRecord
 		belongs_to 		:survey
+		belongs_to 		:page, optional: true
 
 		has_many 		:prompts, dependent: :destroy
 		has_many 		:responses, dependent: :destroy
