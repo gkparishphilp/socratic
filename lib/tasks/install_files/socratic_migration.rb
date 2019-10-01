@@ -52,7 +52,7 @@ class SocraticMigration < ActiveRecord::Migration[5.1]
 
 		create_table 	:socratic_prompts, force: true do |t|
 			t.references 	:question
-			t.string 		:prompt_ui
+			t.string 		:title
 			t.text 			:content
 			t.integer 		:seq
 			t.integer 		:value
