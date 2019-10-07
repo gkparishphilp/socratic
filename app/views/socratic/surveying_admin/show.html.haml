@@ -36,7 +36,7 @@
 								= question.label
 							
 							%td
-								= @surveying.responses.where( question: question ).last.content
+								= @surveying.responses.where( question: question ).last.try( :content )
 
 					
 

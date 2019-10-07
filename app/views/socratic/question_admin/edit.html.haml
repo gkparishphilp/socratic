@@ -41,12 +41,16 @@
 			.col-xs-4
 				.well
 					.form-group
+						= f.label :seq
+						= f.text_field :seq, class: 'form-control'
+
+					.form-group
 						= f.label :question_ui
 						= f.select :question_ui, options_for_select( Socratic::Question.uis, @question.question_ui ), {}, class: 'form-control'
 					
 					.form-group
-						= f.label :seq
-						= f.text_field :seq, class: 'form-control'
+						= f.label :question_group
+						= f.text_field :question_group, class: 'form-control'
 
 					.form-group
 						= f.check_box :is_required
@@ -64,6 +68,7 @@
 				%table.table.table-light.table-bordered{ style: 'margin:0;' }
 					%thead
 						%th{ style: 'width: 4em' } Seq
+						%th Title
 						%th Content
 						%th{ style: 'width: 10em' }
 						%th{ style: 'width: 4em' }
@@ -78,6 +83,8 @@
 								%tr
 									%td
 										= f.text_field :seq, class: 'form-control'
+									%td
+										= f.text_field :title, class: 'form-control'
 									%td
 										= f.text_field :content, class: 'form-control'
 									%td
@@ -108,7 +115,7 @@
 								%td
 									= f.text_field :seq, class: 'form-control'
 								%td
-									= f.text_field :content, class: 'form-control'
+									= f.text_field :title, class: 'form-control'
 								%td
 									= f.submit 'Add', class: 'btn btn-primary'
 

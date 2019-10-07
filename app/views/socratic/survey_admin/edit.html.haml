@@ -54,9 +54,8 @@
 				%table.table.table-light.table-bordered{ style: 'margin:0;' }
 					%thead
 						%th{ style: 'width: 4em' } Seq
-						%th Content
 						%th Title
-						
+						%th Content
 						%th
 							UI
 						%th
@@ -75,9 +74,11 @@
 									%td
 										= f.text_field :seq, class: 'form-control'
 									%td
-										= f.text_field :content, class: 'form-control'
-									%td
 										= f.text_field :title, class: 'form-control'
+										
+									%td
+										= f.text_field :content, class: 'form-control'
+									
 									
 									%td
 										= f.select :question_ui, options_for_select( Socratic::Question.uis, question.question_ui ), {}, class: 'form-control'

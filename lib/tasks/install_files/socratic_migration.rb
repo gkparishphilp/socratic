@@ -1,15 +1,6 @@
 class SocraticMigration < ActiveRecord::Migration[5.1]
 
 	def change
-
-		create_table 	:socratic_pages do |t|
-			t.references 	:survey
-			t.string 		:title
-			t.text			:description
-			t.text			:content
-			t.integer		:status	
-		end
-		add_index :socratic_pages, :status
 		
 		create_table 	:socratic_surveys, force: true do |t|
 			t.references 	:parent_obj, polymorphic: true

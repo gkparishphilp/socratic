@@ -15,18 +15,18 @@ module Socratic
 
 
 		def self.uis
-			[ ['Text Box', 'text_box' ], [ 'Text Area', 'text_area'], ['Radio Buttons', 'radio'], ['Check Boxes', 'check_box' ], ['Select', 'select' ] ]
+			[ ['Text Box', 'text_box' ], [ 'Text Area', 'text_area'], ['Radio Buttons', 'radio'], ['Check Box', 'check_box' ], ['Check Box Group', 'check_box_group' ], ['Select', 'select' ] ]
 		end
 
 
 
-		def label
-			label = self.content
-			label = self.title if label.blank?
+		# def label
+		# 	label = self.content
+		# 	label = self.title if label.blank?
 
-			label = label + "*" if self.is_required?
-			return label
-		end
+		# 	label = label + "*" if self.is_required?
+		# 	return label
+		# end
 
 
 
@@ -38,6 +38,7 @@ module Socratic
 
 			def set_title
 				self.title = self.content.parameterize if ( self.title.blank? && self.content.present? )
+				self.label ||= self.title if self.label.blank?
 			end
 
 	end
