@@ -11,7 +11,13 @@
 - elsif question.question_ui == 'select'
 	.form-group
 		= label_tag "responses[#{question.slug}][prompt_id]", question.label
-		= select_tag "responses[#{question.slug}][prompt_id]", options_for_select( question.prompts.map{ |p| [ p.title, p.id ] }.to_h, @surveying.responses.where( question: question ).last.try( :prompt_id ) ), class: 'form-control'
+		= select_tag "responses[#{question.slug}][prompt_id]", options_for_select( question.prompts.map{ |p| [ p.title, p.id ] }.to_h, @surveying.responses.where( question: question ).last.try( :prompt_id ) ), class: 'form-control', prompt: '-- Please Select --'
+
+- elsif question.question_ui == 'date'
+	.form-group
+		= label_tag "responses[#{question.slug}][content]", question.label
+		= date_field_tag "responses[#{question.slug}][content]", @surveying.responses.where( question: question ).last.try( :content ), class: 'form-control'
+
 		
 - elsif question.question_ui == 'check_box'
 	.form-group
@@ -30,7 +36,7 @@
 	.form-group
 		= label_tag "responses[#{question.slug}][prompt_id]", question.label
 		- question.prompts.each do |prompt|
-			%div
+			%div{ style: 'margin-bottom:-20px;' }
 				%label{ style: 'font-weight: normal;line-height:1.5em;' }
 					= radio_button_tag "responses[#{question.slug}][prompt_id]", prompt.id, @surveying.responses.where( question: question ).last.try( :prompt_id ) == prompt.id, class: '', style: 'display: inline-block;font-size: 34px;margin-right: 0.5em;'
 					= prompt.title
