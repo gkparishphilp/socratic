@@ -1,0 +1,5 @@
+.form-group
+	= label_tag "responses[#{question.slug}][prompt_id]", question.label
+	- question.prompts.each do |prompt|
+		= check_box_tag "responses[#{question.slug}][prompt_id][]", prompt.id, @surveying.responses.where( question: question, prompt_id: prompt.id ).last.present?
+		= prompt.title

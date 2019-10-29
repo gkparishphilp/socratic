@@ -1,0 +1,7 @@
+.form-group
+	= label_tag "responses[#{question.slug}][prompt_id]", question.label
+	- question.prompts.each do |prompt|
+		%div{ style: 'margin-bottom:-20px;' }
+			%label{ style: 'font-weight: normal;line-height:1.5em;' }
+				= radio_button_tag "responses[#{question.slug}][prompt_id]", prompt.id, @surveying.responses.where( question: question ).last.try( :prompt_id ) == prompt.id, class: '', style: 'display: inline-block;font-size: 34px;margin-right: 0.5em;'
+				= prompt.title
