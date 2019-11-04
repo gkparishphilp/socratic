@@ -5,14 +5,15 @@ module Socratic
 		belongs_to		:question
 		belongs_to		:prompt, optional: true
 
-		before_update :set_content_from_prompt
+		before_save :set_content_from_prompt
 
 
 
 		private
 			def set_content_from_prompt
-				self.content = self.prompt.content if ( self.prompt.present? && self.content.blank? )
-				self.content = self.prompt.title if ( self.prompt.present? && self.content.blank? )
+				if self.prompt.present?
+					self.content = self.prompt.title
+				end
 			end
 	end
 end
