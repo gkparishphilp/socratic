@@ -12,7 +12,7 @@ module Socratic
 		private
 			def set_content_from_prompt
 				self.content = self.prompt.content if ( self.prompt.present? && self.content.blank? )
-				#self.content = self.prompt.title if ( self.prompt.present? && self.content.blank? )
+				self.content = self.prompt.title if ( self.prompt.present? && self.content.blank? )
 			end
 	end
 end
