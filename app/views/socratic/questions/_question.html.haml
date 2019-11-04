@@ -1,42 +1,48 @@
 
-- if question.question_ui == 'text_box'
-	.form-group
-		= label_tag "responses[#{question.slug}][content]", question.label
-		= text_field_tag "responses[#{question.slug}][content]", @surveying.responses.where( question: question ).last.try( :content ), class: 'form-control'
-- elsif question.question_ui == 'text_area'
-	.form-group
-		= label_tag "responses[#{question.slug}][content]", question.label
-		= text_area_tag "responses[#{question.slug}][content]", @surveying.responses.where( question: question ).last.try( :content ), class: 'form-control'
+= render "socratic/questions/#{question.question_ui}", question: question
 
-- elsif question.question_ui == 'select'
-	.form-group
-		= label_tag "responses[#{question.slug}][prompt_id]", question.label
-		= select_tag "responses[#{question.slug}][prompt_id]", options_for_select( question.prompts.map{ |p| [ p.title, p.id ] }.to_h, @surveying.responses.where( question: question ).last.try( :prompt_id ) ), class: 'form-control', prompt: '-- Please Select --'
 
-- elsif question.question_ui == 'date'
-	.form-group
-		= label_tag "responses[#{question.slug}][content]", question.label
-		= date_field_tag "responses[#{question.slug}][content]", @surveying.responses.where( question: question ).last.try( :content ), class: 'form-control'
+-#
 
-		
-- elsif question.question_ui == 'check_box'
-	.form-group
-		= hidden_field_tag "responses[#{question.slug}][content]", nil
-		= check_box_tag "responses[#{question.slug}][content]", '1', @surveying.responses.where( question: question ).last.try( :content ) == '1'
-		= question.label
 
-- elsif question.question_ui == 'check_box_group'
-	.form-group
-		= label_tag "responses[#{question.slug}][prompt_id]", question.label
-		- question.prompts.each do |prompt|
-			= check_box_tag "responses[#{question.slug}][prompt_id][]", prompt.id, @surveying.responses.where( question: question, prompt_id: prompt.id ).last.present?
-			= prompt.title
+	- if question.question_ui == 'text_box'
+		.form-group
+			= label_tag "responses[#{question.slug}][content]", question.label
+			= text_field_tag "responses[#{question.slug}][content]", @surveying.responses.where( question: question ).last.try( :content ), class: 'form-control'
+	- elsif question.question_ui == 'text_area'
+		.form-group
+			= label_tag "responses[#{question.slug}][content]", question.label
+			= text_area_tag "responses[#{question.slug}][content]", @surveying.responses.where( question: question ).last.try( :content ), class: 'form-control'
 
-- elsif question.question_ui == 'radio'
-	.form-group
-		= label_tag "responses[#{question.slug}][prompt_id]", question.label
-		- question.prompts.each do |prompt|
-			%div{ style: 'margin-bottom:-20px;' }
-				%label{ style: 'font-weight: normal;line-height:1.5em;' }
-					= radio_button_tag "responses[#{question.slug}][prompt_id]", prompt.id, @surveying.responses.where( question: question ).last.try( :prompt_id ) == prompt.id, class: '', style: 'display: inline-block;font-size: 34px;margin-right: 0.5em;'
-					= prompt.title
+	- elsif question.question_ui == 'select'
+		.form-group
+			= label_tag "responses[#{question.slug}][prompt_id]", question.label
+			= select_tag "responses[#{question.slug}][prompt_id]", options_for_select( question.prompts.map{ |p| [ p.title, p.id ] }.to_h, @surveying.responses.where( question: question ).last.try( :prompt_id ) ), class: 'form-control', prompt: '-- Please Select --'
+
+	- elsif question.question_ui == 'date'
+		.form-group
+			= label_tag "responses[#{question.slug}][content]", question.label
+			= date_field_tag "responses[#{question.slug}][content]", @surveying.responses.where( question: question ).last.try( :content ), class: 'form-control'
+
+			
+	- elsif question.question_ui == 'check_box'
+		.form-group
+			= hidden_field_tag "responses[#{question.slug}][content]", nil
+			= check_box_tag "responses[#{question.slug}][content]", '1', @surveying.responses.where( question: question ).last.try( :content ) == '1'
+			= question.label
+
+	- elsif question.question_ui == 'check_box_group'
+		.form-group
+			= label_tag "responses[#{question.slug}][prompt_id]", question.label
+			- question.prompts.each do |prompt|
+				= check_box_tag "responses[#{question.slug}][prompt_id][]", prompt.id, @surveying.responses.where( question: question, prompt_id: prompt.id ).last.present?
+				= prompt.title
+
+	- elsif question.question_ui == 'radio'
+		.form-group
+			= label_tag "responses[#{question.slug}][prompt_id]", question.label
+			- question.prompts.each do |prompt|
+				%div{ style: 'margin-bottom:-20px;' }
+					%label{ style: 'font-weight: normal;line-height:1.5em;' }
+						= radio_button_tag "responses[#{question.slug}][prompt_id]", prompt.id, @surveying.responses.where( question: question ).last.try( :prompt_id ) == prompt.id, class: '', style: 'display: inline-block;font-size: 34px;margin-right: 0.5em;'
+						= prompt.title
