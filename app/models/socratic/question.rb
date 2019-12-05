@@ -10,7 +10,7 @@ module Socratic
 		validates	:title, presence: true
 
 		include FriendlyId
-		friendly_id :title, use: [ :slugged ]
+		friendly_id :title, use: [ :slugged, :scoped ], scope: :survey
 
 
 		def self.uis

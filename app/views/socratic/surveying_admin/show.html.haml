@@ -22,6 +22,25 @@
 		.col-xs-2
 		
 
+	.row
+		.col-xs-12
+			%table.table
+				%tbody
+					%tr
+						%td
+							Created
+						%td
+							= @surveying.created_at
+					%tr
+						%td
+							Updated
+						%td
+							= @surveying.updated_at
+					%tr
+						%td
+							Completed
+						%td
+							= @surveying.completed_at
 
 	.row
 		.col-xs-12
