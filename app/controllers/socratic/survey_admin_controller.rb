@@ -24,6 +24,7 @@ module Socratic
 
 		def responses
 			@survey = Survey.friendly.find( params[:id] )
+			
 		end
 
 		def update

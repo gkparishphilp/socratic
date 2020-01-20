@@ -21,6 +21,7 @@ class SocraticMigration < ActiveRecord::Migration[5.1]
 			t.integer 		:score
 			t.text 			:notes 
 			t.datetime 		:completed_at
+			t.integer		:status, default: 0 		
 			t.timestamps
 		end
 		add_index :socratic_surveyings, [ :user_id, :survey_id ]
@@ -30,12 +31,14 @@ class SocraticMigration < ActiveRecord::Migration[5.1]
 			t.refereces 	:page
 			t.string 		:title
 			t.text 			:content
+			t.text 			:description
 			t.string 		:question_ui, default: :text_box # text-area, radio, check-box, radio-other, check-box-other, select
 			t.integer 		:seq
 			t.boolean		:is_required
 			t.string 		:slug
 			t.string 		:question_group
 			t.string 		:bind_data_field
+			t.string 		:select_prompt
 			t.timestamps
 		end
 		add_index :socratic_questions, [ :survey_id, :seq ]
