@@ -24,6 +24,7 @@ module Socratic
 
 		def responses
 			@survey = Survey.friendly.find( params[:id] )
+			@surveyings = @survey.surveyings.order( created_at: :desc ).page( params[:page] )
 		end
 
 		def update

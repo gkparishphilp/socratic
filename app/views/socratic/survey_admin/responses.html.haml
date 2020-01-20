@@ -28,7 +28,7 @@
 						%th
 							= question.label
 				%tbody
-					- @survey.surveyings.order( created_at: :desc ).each do |surveying|
+					- @surveyings.each do |surveying|
 						%tr
 							- @survey.questions.order( seq: :asc ).limit( 10 ).each do |question|
 								%td
