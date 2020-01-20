@@ -24,15 +24,28 @@
 		.col-xs-12
 			%table.table
 				%thead
-					- @survey.questions.order( seq: :asc ).limit( 10 ).each do |question|
-						%th
-							= question.label
+					%th
+						User
+					%th
+						Status
+					%th
+						Created
+					%th
+						Completed
+					%th
 				%tbody
 					- @surveyings.each do |surveying|
+
 						%tr
-							- @survey.questions.order( seq: :asc ).limit( 10 ).each do |question|
-								%td
-									= surveying.responses.where( question: question ).last.try( :content )
+							%td
+								= surveying.user.email
+							%td
+								= surveying.status
+							%td
+								= surveying.created_at
+							%td
+								= surveying.completed_at
+
 							%td
 								.btn-group
 									%button.btn.btn-mini.btn-default.dropdown-toggle{ data: { toggle: :dropdown } }
