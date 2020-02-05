@@ -55,7 +55,7 @@
 								= question.label
 							
 							%td
-								= @surveying.responses.where( question: question ).last.try( :content )
+								= @surveying.responses.where( question: question ).pluck( :content ).reject{ |c| c.nil? }.join( ', ' )
 
 					
 
