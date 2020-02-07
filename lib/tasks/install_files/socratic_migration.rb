@@ -68,6 +68,7 @@ class SocraticMigration < ActiveRecord::Migration[5.1]
 			t.string 		:survey_type
 			t.integer 		:status, 			default: 1
 			t.string		:slug
+			t.text 			:preface
 			t.text 			:thank_you_copy
 			t.timestamps
 		end

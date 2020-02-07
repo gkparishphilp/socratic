@@ -31,7 +31,7 @@ module Socratic
 			end
 
 			def question_params
-				params.require( :question ).permit( :survey_id, :title, :content, :question_ui, :question_group, :seq, :is_required )
+				params.require( :question ).permit( :survey_id, :title, :name, :content, :preface, :question_ui, :question_group, :seq, :is_required )
 			end
 
 	end

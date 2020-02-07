@@ -35,9 +35,17 @@
 					= f.label :description, 'Description'
 					= f.text_area :description, class: 'form-control wysiwyg', data: { wysiwyg: { height_min: 100, toolbar_sticky: true, toolbar_preset: 'admin_default' }.to_json }
 
+				.form-group
+					= f.label :thank_you_copy
+					= f.text_area :thank_you_copy, class: 'form-control wysiwyg', data: { wysiwyg: { height_min: 100, toolbar_sticky: true, toolbar_preset: 'admin_default' }.to_json }
+
+
 			.col-xs-4
 				.well
 
+					.form-group
+						= f.label :survey_type
+						= f.text_field :survey_type, class: 'form-control'
 					.form-group
 						= f.label :status
 						= f.collection_select :status, Socratic::Survey.statuses, :first, :first, {}, class: 'form-control'
@@ -53,10 +61,11 @@
 
 				%table.table.table-light.table-bordered{ style: 'margin:0;' }
 					%thead
-						%th{ style: 'width: 4em' } Seq
-						%th Title
-						%th Content
-						%th
+						%th{ style: 'width: 4em' }
+							Seq
+						%th 
+							Question
+						%th{ style: 'width: 12em' }
 							UI
 						%th
 							Req?
@@ -75,10 +84,6 @@
 										= f.text_field :seq, class: 'form-control'
 									%td
 										= f.text_field :title, class: 'form-control'
-										
-									%td
-										= f.text_field :content, class: 'form-control'
-									
 									
 									%td
 										= f.select :question_ui, options_for_select( Socratic::Question.uis, question.question_ui ), {}, class: 'form-control'
@@ -111,8 +116,6 @@
 							%tr
 								%td
 									= f.text_field :seq, class: 'form-control'
-								%td
-									= f.text_field :content, class: 'form-control'
 								%td
 									= f.text_field :title, class: 'form-control'
 								

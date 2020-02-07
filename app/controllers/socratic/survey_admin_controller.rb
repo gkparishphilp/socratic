@@ -5,11 +5,12 @@ module Socratic
 
 		def create
 			@survey = Survey.create( survey_params )
-			redirect_back fallback_location: '/survey_admin'
+			redirect_to edit_survey_admin_path( @survey )
+			#redirect_back fallback_location: '/survey_admin'
 		end
 
 		def destroy
-			@survey.archive!
+			@survey.destroy
 			redirect_to survey_admin_index_path
 		end
 
@@ -40,7 +41,7 @@ module Socratic
 			end
 
 			def survey_params
-				params.require( :survey ).permit( :title, :description )
+				params.require( :survey ).permit( :title, :description, :status, :thank_you_copy, :survey_type )
 			end
 	end
 end
