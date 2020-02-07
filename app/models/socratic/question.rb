@@ -5,27 +5,17 @@ module Socratic
 		has_many 		:prompts, dependent: :destroy
 		has_many 		:responses, dependent: :destroy
 
-		before_validation	:set_seq, :set_title
+		before_validation	:set_seq, :set_name
 
 		validates	:title, presence: true
 
 		include FriendlyId
-		friendly_id :title, use: [ :slugged, :scoped ], scope: :survey
+		friendly_id :name, use: [ :slugged, :scoped ], scope: :survey
 
 
 		def self.uis
 			[ ['Text Box', 'text_box' ], [ 'Text Area', 'text_area'], ['Radio Buttons', 'radio'], ['Check Box', 'check_box' ], ['Check Box Group', 'check_box_group' ], ['Select', 'select' ], ['Date', 'date'], ['Agree Box', 'agree_box'] ]
 		end
-
-
-
-		# def label
-		# 	label = self.content
-		# 	label = self.title if label.blank?
-
-		# 	label = label + "*" if self.is_required?
-		# 	return label
-		# end
 
 
 
@@ -35,9 +25,8 @@ module Socratic
 				self.seq ||= ( self.survey.questions.maximum( :seq ) || 0 ) + 1
 			end
 
-			def set_title
-				self.title = self.content.parameterize if ( self.title.blank? && self.content.present? )
-				self.label ||= self.title if self.label.blank?
+			def set_name
+				self.name = self.title.parameterize if ( self.name.blank? && self.title.present? )
 			end
 
 	end

@@ -14,7 +14,7 @@
 				%li
 					Edit Question
 					%strong
-						= @question.title
+						= @question.name
 		.col-xs-2
 			%a.btn.btn-danger{ href: '', data: { method: :delete, confirm: 'Are you sure?' } }
 				%i.fa.fa-trash
@@ -30,8 +30,8 @@
 					= f.text_field :title, class: 'form-control input-lg'
 
 				.form-group
-					Label:
-					= @question.label
+					Name:
+					= @question.name
 
 
 				.form-group
