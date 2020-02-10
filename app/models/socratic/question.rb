@@ -22,6 +22,8 @@ module Socratic
 		private
 
 			def set_seq
+				if self.seq.present?
+					self.survey.questions.where( "seq >= :s", s: self.seq ).update_all( seq: seq + 1 )
 				self.seq ||= ( self.survey.questions.maximum( :seq ) || 0 ) + 1
 			end
 

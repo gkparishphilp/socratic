@@ -52,7 +52,7 @@
 					- @survey.questions.each do |question|
 						%tr
 							%td{ style: 'width: 20em;' }
-								= question.label
+								= question.name
 							
 							%td
 								= @surveying.responses.where( question: question ).pluck( :content ).reject{ |c| c.nil? }.join( ', ' )
