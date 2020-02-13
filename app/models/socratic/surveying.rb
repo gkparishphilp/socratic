@@ -11,5 +11,11 @@ module Socratic
 		accepts_nested_attributes_for :responses
 
 
+		def responses_hash
+			hash = Hash.new
+			self.responses.includes( :question ).each{ |r| hash[r.question.name] = r.content }
+
+		end
+
 	end
 end
