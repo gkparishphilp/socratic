@@ -1,5 +1,7 @@
 
 
+
+
 .container-fluid
 	.row
 		.col-xs-10
@@ -16,9 +18,19 @@
 				%li
 					%strong
 						Responses
+						= "(#{pluralize @surveyings.total_count, 'Response'})"
 		.col-xs-2
-		
-
+			%a.btn.btn-success{ href: responses_survey_admin_path( @survey, format: :csv, params: request.query_parameters ) }
+				%i.fa.fa-download
+				CSV
+			
+	.row
+		.col-xs-6
+			= raw paginate @surveyings
+		.col-xs-6
+			= form_tag responses_survey_admin_path( @survey ), method: :get, class: 'pull-right form-inline' do
+				= select_tag :status, options_from_collection_for_select( Socratic::Surveying.statuses, :first, :first, params[:status] ), { prompt: "-- All --", class: 'form-control' }
+				= submit_tag 'Search', class: 'btn btn-primary'
 
 	.row
 		.col-xs-12
@@ -28,10 +40,22 @@
 						User
 					%th
 						Status
+						%a{ href: responses_survey_admin_path( @survey, sort_by: 'status', sort_dir: 'asc' ) }
+							%i.fa.fa-arrow-up
+						%a{ href: responses_survey_admin_path( @survey, sort_by: 'status', sort_dir: 'desc' ) }
+							%i.fa.fa-arrow-down
 					%th
 						Created
+						%a{ href: responses_survey_admin_path( @survey, sort_by: 'created_at', sort_dir: 'asc' ) }
+							%i.fa.fa-arrow-up
+						%a{ href: responses_survey_admin_path( @survey, sort_by: 'created_at', sort_dir: 'desc' ) }
+							%i.fa.fa-arrow-down
 					%th
 						Completed
+						%a{ href: responses_survey_admin_path( @survey, sort_by: 'completed_at', sort_dir: 'asc' ) }
+							%i.fa.fa-arrow-up
+						%a{ href: responses_survey_admin_path( @survey, sort_by: 'completed_at', sort_dir: 'desc' ) }
+							%i.fa.fa-arrow-down
 					%th
 				%tbody
 					- @surveyings.each do |surveying|
@@ -64,6 +88,8 @@
 				
 					
 
-
+	.row
+		.col
+			= raw paginate @surveyings
 
 

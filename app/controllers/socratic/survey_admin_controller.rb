@@ -25,7 +25,40 @@ module Socratic
 
 		def responses
 			@survey = Survey.friendly.find( params[:id] )
-			@surveyings = @survey.surveyings.order( created_at: :desc ).page( params[:page] )
+
+			sort_by = params[:sort_by] || 'created_at'
+			sort_dir = params[:sort_dir] || 'desc'
+
+			@surveyings = @survey.surveyings.order( "#{sort_by} #{sort_dir}" )
+
+			if params[:status].present? && params[:status] != 'all'
+				@surveyings = eval "@surveyings.#{params[:status]}"
+			end
+
+
+			if request.format.to_s == 'text/csv'
+				@csv = CSV.generate( headers: true ) do |csv|
+					headers = [ 'email', 'created_at', 'completed_at' ]
+					headers = headers + @survey.questions.order( :seq ).pluck( :name )
+					csv << headers
+					@surveyings.each do |surveying|
+						row = [ surveying.user.email, surveying.created_at, surveying.completed_at ]
+						@survey.questions.order( :seq ).each do |q|
+							row << surveying.responses.where( question: q ).pluck( :content ).reject{ |c| c.nil? }.join( '; ' )
+						end
+						csv << row
+					end
+				end
+			end
+
+			@surveyings = @surveyings.page( params[:page] )
+
+			respond_to do |format|
+				format.html
+				format.csv { send_data @csv, filename: "survey_data-#{Date.today}.csv" }
+			end
+
+
 		end
 
 		def update
@@ -41,7 +74,7 @@ module Socratic
 			end
 
 			def survey_params
-				params.require( :survey ).permit( :title, :description, :status, :preface, :thank_you_copy, :survey_type, :parent_obj_id, :parent_obj_type )
+				params.require( :survey ).permit( :title, :description, :status, :preface, :thank_you_copy, :survey_type, :parent_obj_id, :parent_obj_type, :starts_at, :ends_at, :require_login )
 			end
 	end
 end

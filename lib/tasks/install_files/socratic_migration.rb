@@ -72,6 +72,10 @@ class SocraticMigration < ActiveRecord::Migration[5.1]
 			t.text 			:thank_you_copy
 			t.string 		:template
 			t.string 		:layout
+			t.datetime 		:starts_at
+			t.datetime 		:ends_at
+			t.boolean 		:require_login
+
 			t.timestamps
 		end
 		add_index :socratic_surveys, :slug
