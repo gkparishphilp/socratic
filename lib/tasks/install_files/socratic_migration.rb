@@ -70,6 +70,8 @@ class SocraticMigration < ActiveRecord::Migration[5.1]
 			t.string		:slug
 			t.text 			:preface
 			t.text 			:thank_you_copy
+			t.string 		:template
+			t.string 		:layout
 			t.timestamps
 		end
 		add_index :socratic_surveys, :slug
