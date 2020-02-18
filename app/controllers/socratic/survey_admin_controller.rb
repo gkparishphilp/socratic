@@ -79,7 +79,7 @@ module Socratic
 			end
 
 			def survey_params
-				params.require( :survey ).permit( :title, :description, :status, :preface, :thank_you_copy, :survey_type, :parent_obj_id, :parent_obj_type, :starts_at, :ends_at, :require_login, :parent_obj_id, :parent_obj_type )
+				params.require( :survey ).permit( :title, :description, :status, :preface, :thank_you_copy, :survey_type, :parent_obj_id, :parent_obj_type, :starts_at, :ends_at, :require_login, :parent_obj_id, :parent_obj_type, :template )
 			end
 	end
 end
