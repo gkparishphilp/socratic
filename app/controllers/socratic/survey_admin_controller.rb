@@ -3,6 +3,13 @@ module Socratic
 
 		before_action :get_survey, except: [ :create, :index ]
 
+
+		def clone
+			cloned = @survey.clone!
+			redirect_to edit_survey_admin_path( cloned )
+		end
+
+
 		def create
 			@survey = Survey.create( survey_params )
 			redirect_to edit_survey_admin_path( @survey )
@@ -24,8 +31,6 @@ module Socratic
 		end
 
 		def responses
-			@survey = Survey.friendly.find( params[:id] )
-
 			sort_by = params[:sort_by] || 'created_at'
 			sort_dir = params[:sort_dir] || 'desc'
 
@@ -74,7 +79,7 @@ module Socratic
 			end
 
 			def survey_params
-				params.require( :survey ).permit( :title, :description, :status, :preface, :thank_you_copy, :survey_type, :parent_obj_id, :parent_obj_type, :starts_at, :ends_at, :require_login )
+				params.require( :survey ).permit( :title, :description, :status, :preface, :thank_you_copy, :survey_type, :parent_obj_id, :parent_obj_type, :starts_at, :ends_at, :require_login, :parent_obj_id, :parent_obj_type )
 			end
 	end
 end

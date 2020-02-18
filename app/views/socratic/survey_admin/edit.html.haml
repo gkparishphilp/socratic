@@ -19,6 +19,10 @@
 				= pluralize @survey.surveyings.count, 'Response'
 				%i.fa.fa-eye
 
+			%a.btn.btn-warning{ href: clone_survey_admin_path( @survey ), data: { method: :post } }
+				Clone
+				%i.fa.fa-copy
+
 			%a.btn.btn-danger.pull-right{ href: survey_admin_path, data: { method: :delete, confirm: 'Are you sure?' } }
 				%i.fa.fa-trash
 				Delete
@@ -58,6 +62,14 @@
 					.form-group
 						= f.label :ends_at
 						= f.text_field :ends_at, class: 'form-control datetimepicker'
+
+					.form-group
+						= f.label :parent_obj_type
+						= f.text_field :parent_obj_type, class: 'form-control'
+
+					.form-group
+						= f.label :parent_obj_id
+						= f.text_field :parent_obj_id, class: 'form-control'
 
 					.form-group
 						= f.check_box :require_login
