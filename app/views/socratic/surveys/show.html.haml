@@ -1,0 +1,18 @@
+.container
+	.row
+		.col
+			%center
+				%h1= @survey.title
+
+	.row
+		.col
+			= raw @survey.description
+
+	.row
+		.col
+			- @survey.questions.order( seq: :asc ).each do |q|
+				= render "questions/question", question: q
+
+
+
+				

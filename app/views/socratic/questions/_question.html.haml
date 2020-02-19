@@ -1,5 +1,12 @@
 
-= render "socratic/questions/#{question.question_ui}", question: question
+.socratic-question{ style: question.style, class: question.classes }
+	- if question.preface.present?
+		.preface= raw question.preface
+
+	= render "socratic/questions/#{question.question_ui}", question: question
+
+	- if question.content.present?
+		.content= raw quesiton.content
 
 
 -#

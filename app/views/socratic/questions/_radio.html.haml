@@ -1,5 +1,5 @@
 .form-group
-	= label_tag "responses[#{question.slug}][prompt_id]", question.label
+	= label_tag "responses[#{question.slug}][prompt_id]", question.title
 	- question.prompts.each do |prompt|
 		%div{ style: 'margin-bottom:-20px;' }
 			%label{ style: 'font-weight: normal;line-height:1.5em;' }

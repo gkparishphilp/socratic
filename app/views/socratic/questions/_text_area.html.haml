@@ -1,3 +1,3 @@
 .form-group
-	= label_tag "responses[#{question.slug}][content]", question.label
+	= label_tag "responses[#{question.slug}][content]", question.title
 	= text_area_tag "responses[#{question.slug}][content]", @surveying.responses.where( question: question ).last.try( :content ), class: 'form-control'
