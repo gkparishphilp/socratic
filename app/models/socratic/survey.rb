@@ -37,7 +37,7 @@ module Socratic
 					question_ui: q.question_ui,
 					seq: q.seq,
 					is_required: q.is_required,
-					page_id: q.page_id,
+					#page_id: q.page_id,
 					question_group: q.question_group,
 					bind_data_field: q.bind_data_field,
 					name: q.name,

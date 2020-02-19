@@ -67,6 +67,7 @@ module Socratic
 		end
 
 		def update
+			@survey.slug = nil if ( params[:survey][:title] != @survey.title ) || ( params[:survey][:slug_pref].present? )
 			@survey.update( survey_params )
 			redirect_back fallback_location: '/survey_admin'
 		end
