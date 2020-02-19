@@ -1,4 +1,4 @@
 .form-group
 	= hidden_field_tag "responses[#{question.slug}][content]", nil
 	= check_box_tag "responses[#{question.slug}][content]", '1', @surveying.responses.where( question: question ).last.try( :content ) == '1'
-	= question.label
+	= question.title
