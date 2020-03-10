@@ -46,12 +46,32 @@ module Socratic
 					headers = [ 'email', 'created_at', 'completed_at' ]
 					headers = headers + @survey.questions.order( :seq ).pluck( :name )
 					csv << headers
-					@surveyings.each do |surveying|
-						row = [ surveying.user.email, surveying.created_at, surveying.completed_at ]
-						@survey.questions.order( :seq ).each do |q|
-							row << surveying.responses.where( question: q ).pluck( :content ).reject{ |c| c.nil? }.join( '; ' )
-						end
-						csv << row
+
+					sql = <<-SQL
+SELECT sing.id as "surveying_id", u.id as "user_id", u.email, sing.created_at, sing.completed_at, q.seq, STRING_AGG( r.content, ';' ) as "content"
+FROM users u
+INNER JOIN socratic_surveyings sing ON sing.user_id = u.id
+INNER JOIN socratic_responses r ON r.surveying_id = sing.id
+INNER JOIN socratic_questions q ON q.id = r.question_id
+INNER JOIN socratic_surveys s ON q.survey_id = s.id
+WHERE q.survey_id = #{@survey.id}
+GROUP BY q.id, u.id, sing.id
+ORDER BY u.email ASC, q.seq ASC
+SQL
+
+					response = ActiveRecord::Base.connection.execute( sql )
+					surveying_rows = {}
+					response.each do |row|
+						surveying_row = surveying_rows[row['surveying_id']]
+						surveying_row ||= [ row['email'], row['created_at'], row['completed_at'] ]
+
+						surveying_row[row['seq'].to_i + 2] = row['content']
+
+						surveying_rows[row['surveying_id']] = surveying_row
+					end
+
+					surveying_rows.each do |surveying_id,surveying_row|
+						csv << surveying_row
 					end
 				end
 			end
