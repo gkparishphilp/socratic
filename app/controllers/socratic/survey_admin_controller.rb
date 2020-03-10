@@ -70,8 +70,8 @@ SQL
 
 						# Add in the responses, one question at a time, offset by the number
 						# offset by 2, -1 (seq is base 1) + 3 (leading columns), to account
-						# for the 3 leading columns. 
-						surveying_row[ro w['seq'].to_i + 2] = row['content']
+						# for the 3 leading columns.
+						surveying_row[row['seq'].to_i + 2] = row['content']
 					end
 
 					surveying_rows.each do |surveying_id,surveying_row|
