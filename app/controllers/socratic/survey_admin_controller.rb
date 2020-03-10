@@ -61,13 +61,17 @@ SQL
 
 					response = ActiveRecord::Base.connection.execute( sql )
 					surveying_rows = {}
+
+					# Group the Responses into Rows Based on surveying id
 					response.each do |row|
+						# initialize the surveying row with email, created at and completed at data
+						surveying_rows[row['surveying_id']] ||= [ row['email'], row['created_at'], row['completed_at'] ]
 						surveying_row = surveying_rows[row['surveying_id']]
-						surveying_row ||= [ row['email'], row['created_at'], row['completed_at'] ]
 
-						surveying_row[row['seq'].to_i + 2] = row['content']
-
-						surveying_rows[row['surveying_id']] = surveying_row
+						# Add in the responses, one question at a time, offset by the number
+						# offset by 2, -1 (seq is base 1) + 3 (leading columns), to account
+						# for the 3 leading columns. 
+						surveying_row[ro w['seq'].to_i + 2] = row['content']
 					end
 
 					surveying_rows.each do |surveying_id,surveying_row|
