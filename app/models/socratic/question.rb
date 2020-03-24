@@ -14,7 +14,7 @@ module Socratic
 
 
 		def self.uis
-			[ ['Text Box', 'text_box' ], [ 'Text Area', 'text_area'], ['Radio Buttons', 'radio'], ['Check Box', 'check_box' ], ['Check Box Group', 'check_box_group' ], ['Select', 'select' ], ['Date', 'date'], ['Agree Box', 'agree_box'] ]
+			[ ['Text Box', 'text_box' ], [ 'Text Area', 'text_area'], ['Radio Buttons', 'radio'], ['Check Box', 'check_box' ], ['Check Box Group', 'check_box_group' ], ['Select', 'select' ], ['Star Rating', 'star_rating'], ['Date', 'date'], ['Agree Box', 'agree_box'] ]
 		end
 
 
