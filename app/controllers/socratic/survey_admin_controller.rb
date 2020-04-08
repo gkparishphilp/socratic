@@ -44,11 +44,11 @@ module Socratic
 			if request.format.to_s == 'text/csv'
 				@csv = CSV.generate( headers: true ) do |csv|
 					headers = [ 'email', 'created_at', 'completed_at' ]
-					headers = headers + @survey.questions.order( :seq ).pluck( :name )
+					headers = headers + @survey.questions.order( seq: :asc, id: :asc ).pluck( :name )
 					csv << headers
 
 					sql = <<-SQL
-SELECT sing.id as "surveying_id", u.id as "user_id", u.email, sing.created_at, sing.completed_at, q.seq, STRING_AGG( r.content, ';' ) as "content"
+SELECT sing.id as "surveying_id", u.id as "user_id", u.email, sing.created_at, sing.completed_at, q.seq, STRING_AGG( r.content, ';' ) as "content", q.name
 FROM users u
 INNER JOIN socratic_surveyings sing ON sing.user_id = u.id
 INNER JOIN socratic_responses r ON r.surveying_id = sing.id
@@ -68,10 +68,10 @@ SQL
 						surveying_rows[row['surveying_id']] ||= [ row['email'], row['created_at'], row['completed_at'] ]
 						surveying_row = surveying_rows[row['surveying_id']]
 
-						# Add in the responses, one question at a time, offset by the number
-						# offset by 2, -1 (seq is base 1) + 3 (leading columns), to account
-						# for the 3 leading columns.
-						surveying_row[row['seq'].to_i + 2] = row['content']
+						question_row_index = headers.index(row['name'])
+						surveying_row[question_row_index] = row['content']
+
+						surveying_rows[row['surveying_id']] = surveying_row
 					end
 
 					surveying_rows.each do |surveying_id,surveying_row|

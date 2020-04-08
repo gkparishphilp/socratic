@@ -1,0 +1,56 @@
+:css
+	.star-rating{
+		font-size: 0;
+	}
+	.star-rating-wrap{
+		display: inline-block;
+		font-size: 1rem;
+	}
+	.star-rating-wrap:after{
+		content: "";
+		display: table;
+		clear: both;
+	}
+	.star-rating-ico{
+		float: right;
+		padding-left: 2px;
+		cursor: pointer;
+		color: #FFB300;
+	}
+	.star-rating-ico:last-child{
+		padding-left: 0;
+	}
+	.star-rating-input{
+		display: none;
+	}
+	.star-rating-ico:hover:before,
+	.star-rating-ico:hover ~ .star-rating-ico:before,
+	.star-rating-input:checked ~ .star-rating-ico:before
+	{
+		font-weight: 900;
+	}
+
+
+
+
+.form-group
+	= label_tag "responses[#{question.slug}][prompt_id]", question.title
+	
+.star-rating
+	.star-rating-wrap
+		- question.prompts.order( value: :desc ).each do |prompt|
+			= radio_button_tag "responses[#{question.slug}][prompt_id]", prompt.id, @surveying.responses.where( question: question ).last.try( :prompt_id ) == prompt.id, class: 'star-rating-input', style: 'display:none;'
+			%label{ for: "responses_#{question.slug}_prompt_id_#{prompt.id}", class: 'star-rating-ico far fa-star fa-lg' }
+
+
+
+
+
+
+-#.form-group
+	= label_tag "responses[#{question.slug}][prompt_id]", question.title
+	- question.prompts.each do |prompt|
+		%div{ style: 'margin-bottom:-20px;' }
+			%label{ style: 'font-weight: normal;line-height:1.5em;' }
+				= radio_button_tag "responses[#{question.slug}][prompt_id]", prompt.id, @surveying.responses.where( question: question ).last.try( :prompt_id ) == prompt.id, class: '', style: 'display: inline-block;font-size: 34px;margin-right: 0.5em;'
+				= prompt.title
