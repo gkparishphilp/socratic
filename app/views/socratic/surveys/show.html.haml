@@ -8,6 +8,11 @@
 		.col
 			= raw @survey.description
 
+	- if @survey.preface.present?
+		.row
+			.col
+				= raw @survey.preface
+
 	.row
 		.col
 			- @survey.questions.order( seq: :asc ).each do |q|
