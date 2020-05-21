@@ -3,6 +3,12 @@ module Socratic
 
 		before_action :get_question, except: :create
 
+
+		def clone
+			cloned = @question.clone!
+			redirect_back fallback_location:  edit_question_admin_path( @question )
+		end
+
 		def create
 			@question = Question.new( question_params )
 

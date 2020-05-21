@@ -138,6 +138,10 @@
 													%a{ href: edit_question_admin_path( question.id ) }
 														%i.fa.fa-pencil
 														Edit
+												%li
+													%a{ href: clone_question_admin_path( question.id ), data: { method: :post } }
+														%i.fa.fa-copy
+														Clone
 												%li.divider
 												%li
 													%a{ href: question_admin_path( question ), data: { method: 'delete', confirm: 'Are you sure?' } }

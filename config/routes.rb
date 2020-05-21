@@ -1,6 +1,9 @@
 Socratic::Engine.routes.draw do
 
-	resources 	:question_admin
+	resources 	:question_admin do
+		post :clone, on: :member
+	end
+	
 	resources 	:survey_admin do 
 		get :responses, on: :member
 		post :clone, on: :member
