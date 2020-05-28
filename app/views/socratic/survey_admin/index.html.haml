@@ -51,7 +51,7 @@
 								.title{ style: 'font-size:120%;' }= link_to survey.title, edit_survey_admin_path( survey.id )
 								
 							%td
-								= link_to survey.surveyings.count, responses_survey_admin_path( survey )
+								= link_to survey.surveyings.count, responses_survey_admin_path( survey.id )
 							%td
 								= survey.created_at
 							
@@ -67,7 +67,7 @@
 												Edit
 										%li.divider
 										%li
-											%a{ href: survey_admin_path( survey ), data: { method: 'delete', confirm: 'Are you sure?' } }
+											%a{ href: survey_admin_path( survey.id ), data: { method: 'delete', confirm: 'Are you sure?' } }
 												%i.fa.fa-trash-o
 												Delete!
 
