@@ -19,7 +19,7 @@ module Socratic
 
 		def destroy
 			@question.destroy
-			redirect_to survey_admin_edit_path( @question.survey )
+			redirect_to edit_survey_admin_path( @question.survey )
 		end
 
 		def edit
