@@ -20,7 +20,7 @@
 					View Response
 
 		.col-xs-2
-		
+
 
 	.row
 		.col-xs-12
@@ -60,13 +60,7 @@
 							%td{ style: 'width: 20em;' }
 								- if question.is_required?
 									*
-								= question.name
-							
+								= question.title
+
 							%td
 								= @surveying.responses.where( question: question ).pluck( :content ).reject{ |c| c.nil? }.join( ', ' )
-
-					
-
-
-
-
