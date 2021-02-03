@@ -40,7 +40,6 @@ module Socratic
 					#page_id: q.page_id,
 					question_group: q.question_group,
 					bind_data_field: q.bind_data_field,
-					name: q.name,
 					default_prompt: q.default_prompt,
 					description: q.description,
 					preface: q.preface,
