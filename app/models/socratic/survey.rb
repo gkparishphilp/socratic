@@ -30,7 +30,7 @@ module Socratic
 				require_login: self.require_login
 			)
 
-			self.questions.each do |q|
+			self.questions.order( seq: :asc ).each do |q|
 				new_question = cloned.questions.create(
 					title: q.title,
 					content: q.content,
@@ -46,7 +46,7 @@ module Socratic
 					question_style: q.question_style,
 					question_classes: q.question_classes
 				)
-				q.prompts.each do |p|
+				q.prompts.order( seq: :asc ).each do |p|
 					new_question.prompts.create(
 						content: p.content,
 						seq: p.seq,
