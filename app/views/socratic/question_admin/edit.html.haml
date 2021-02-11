@@ -14,7 +14,7 @@
 				%li
 					Edit Question
 					%strong
-						= @question.name
+						= @question.title
 		.col-xs-2
 			%a.btn.btn-danger{ href: '', data: { method: :delete, confirm: 'Are you sure?' } }
 				%i.fa.fa-trash
@@ -30,8 +30,10 @@
 					= f.text_field :title, class: 'form-control input-lg'
 
 				.form-group
-					= f.label :name
-					= f.text_field :name, class: 'form-control input-sm'
+					= f.label :data_label
+					= f.text_field :data_label, class: 'form-control input-sm'
+					.small
+						data label will be used to label this column is reports and csv exports of the survey data
 
 				.form-group
 					= f.label :preface

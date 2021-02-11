@@ -18,7 +18,7 @@ class SocraticMigration < ActiveRecord::Migration[5.1]
 			t.references 	:survey
 			t.refereces 	:page
 			t.string 		:title
-			t.string  		:name
+			t.string  		:data_label
 			t.text 			:content
 			t.text 			:preface
 			t.string 		:question_ui, default: :text_box # text-area, radio, check-box, radio-other, check-box-other, select

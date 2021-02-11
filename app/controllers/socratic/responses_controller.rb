@@ -38,7 +38,7 @@ module Socratic
 
 			if @surveying.responses.where( question: @surveying.survey.questions.where( is_required: true ) ).where( content: '' ).present?
 				set_flash "Please answer all required questions", :error
-				redirect_to "/cb-apply?cb_application_id=#{@surveying.id}"
+				redirect_back( fallback_location: '/' )
 				return false
 			end
 

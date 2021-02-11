@@ -52,8 +52,9 @@
 		.col-xs-12
 			%table.table
 				%thead
-					%th
-					%th
+					%th Question
+					%th Data Label
+					%th Response
 				%tbody
 					- @survey.questions.each do |question|
 						%tr
@@ -61,6 +62,8 @@
 								- if question.is_required?
 									*
 								= question.title
+							%td
+								= question.data_label
 
 							%td
 								= @surveying.responses.where( question: question ).pluck( :content ).reject{ |c| c.nil? }.join( ', ' )

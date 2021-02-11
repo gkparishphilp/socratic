@@ -5,12 +5,12 @@ module Socratic
 		has_many 		:prompts, dependent: :destroy
 		has_many 		:responses, dependent: :destroy
 
-		before_validation	:set_seq, :set_name
+		before_validation	:set_seq, :set_label
 
 		validates	:title, presence: true
 
 		include FriendlyId
-		friendly_id :name, use: [ :slugged, :scoped ], scope: :survey
+		friendly_id :sluggit, use: [ :slugged, :scoped ], scope: :survey
 
 
 		def self.uis
@@ -25,7 +25,7 @@ module Socratic
 				title: "#{self.title} (copy)", 
 				content: self.content,
 				description: self.description,
-				name: self.name,
+				data_label: self.data_label,
 				question_ui: self.question_ui,
 				seq: self.seq + 1,
 				is_required: self.is_required,
@@ -52,19 +52,21 @@ module Socratic
 		end
 
 
+		def sluggit
+			self.data_label || self.title
+		end
+
+
 
 		private
 
+			def set_label
+				self.data_label ||= self.title.parameterize
+			end
 			def set_seq
-				if self.seq.present?
-					#self.survey.questions.where( "seq >= :s", s: self.seq ).update_all( "seq = seq + 1" )
-				else
+				if not( self.seq.present? )
 					self.seq = ( self.survey.questions.maximum( :seq ) || 0 ) + 1
 				end
-			end
-
-			def set_name
-				self.name = "#{self.id}: #{self.title.parameterize}"# if ( self.name.blank? && self.title.present? )
 			end
 
 	end

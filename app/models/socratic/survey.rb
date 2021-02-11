@@ -33,6 +33,7 @@ module Socratic
 			self.questions.order( seq: :asc ).each do |q|
 				new_question = cloned.questions.create(
 					title: q.title,
+					data_label: q.data_label,
 					content: q.content,
 					question_ui: q.question_ui,
 					seq: q.seq,
