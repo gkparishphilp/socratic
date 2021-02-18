@@ -53,10 +53,10 @@ module Socratic
 SELECT sing.id as "surveying_id", u.id as "user_id", u.email, sing.created_at, sing.completed_at, q.seq, STRING_AGG( r.content, ';' ) as "content", q.data_label, q.id "question_id"
 FROM users u
 INNER JOIN socratic_surveyings sing ON sing.user_id = u.id
-INNER JOIN socratic_responses r ON r.surveying_id = sing.id
-INNER JOIN socratic_questions q ON q.id = r.question_id
-INNER JOIN socratic_surveys s ON q.survey_id = s.id
-WHERE q.survey_id = #{@survey.id}
+LEFT JOIN socratic_responses r ON r.surveying_id = sing.id
+LEFT JOIN socratic_questions q ON q.id = r.question_id
+LEFT JOIN socratic_surveys s ON q.survey_id = s.id
+WHERE sing.survey_id = #{@survey.id}
 GROUP BY q.id, u.id, sing.id
 ORDER BY u.email ASC, q.seq ASC
 SQL
@@ -70,8 +70,12 @@ SQL
 						surveying_rows[row['surveying_id']] ||= [ row['email'], row['created_at'], row['completed_at'] ]
 						surveying_row = surveying_rows[row['surveying_id']]
 
-						question_row_index = question_index_lookup[row['question_id']]
-						surveying_row[question_row_index] = row['content']
+						question_id = row['question_id']
+
+						if question_id.present?
+							question_row_index = question_index_lookup[question_id]
+							surveying_row[question_row_index] = row['content']
+						end
 
 						surveying_rows[row['surveying_id']] = surveying_row
 					end
