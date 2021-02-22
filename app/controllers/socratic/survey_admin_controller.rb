@@ -43,7 +43,7 @@ module Socratic
 
 			if request.format.to_s == 'text/csv'
 				@csv = CSV.generate( headers: true ) do |csv|
-					headers = [ 'Email', 'Created', 'Completed' ]
+					headers = [ 'Email', 'First Name', 'Last Name', 'Created', 'Completed' ]
 					headers = headers + @survey.questions.order( seq: :asc, id: :asc ).pluck( :title )
 					question_index_lookup = @survey.questions.order( seq: :asc, id: :asc ).pluck( :id ).map.with_index(3).to_h
 

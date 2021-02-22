@@ -39,6 +39,10 @@
 					%th
 						User
 					%th
+						First Name
+					%th
+						Last Name
+					%th
 						Status
 						%a{ href: responses_survey_admin_path( @survey, sort_by: 'status', sort_dir: 'asc' ) }
 							%i.fa.fa-arrow-up
@@ -62,7 +66,11 @@
 
 						%tr
 							%td
-								= surveying.user.email
+								= surveying.user.try( :email )
+							%td
+								= surveying.user.try( :first_name )
+							%td
+								= surveying.user.try( :last_name )
 							%td
 								= surveying.status
 							%td
