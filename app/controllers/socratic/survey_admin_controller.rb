@@ -50,7 +50,7 @@ module Socratic
 					csv << headers
 
 					sql = <<-SQL
-SELECT sing.id as "surveying_id", u.id as "user_id", u.email, sing.created_at, sing.completed_at, q.seq, STRING_AGG( r.content, ';' ) as "content", q.data_label, q.id "question_id"
+SELECT sing.id as "surveying_id", u.id as "user_id", u.email, u.first_name, u.last_name, sing.created_at, sing.completed_at, q.seq, STRING_AGG( r.content, ';' ) as "content", q.data_label, q.id "question_id"
 FROM users u
 INNER JOIN socratic_surveyings sing ON sing.user_id = u.id
 LEFT JOIN socratic_responses r ON r.surveying_id = sing.id
@@ -67,7 +67,7 @@ SQL
 					# Group the Responses into Rows Based on surveying id
 					response.each do |row|
 						# initialize the surveying row with email, created at and completed at data
-						surveying_rows[row['surveying_id']] ||= [ row['email'], row['created_at'], row['completed_at'] ]
+						surveying_rows[row['surveying_id']] ||= [ row['email'], row['first_name'], row['last_name'], row['created_at'], row['completed_at'] ]
 						surveying_row = surveying_rows[row['surveying_id']]
 
 						question_id = row['question_id']
