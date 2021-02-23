@@ -45,7 +45,7 @@ module Socratic
 				@csv = CSV.generate( headers: true ) do |csv|
 					headers = [ 'Email', 'First Name', 'Last Name', 'Created', 'Completed' ]
 					headers = headers + @survey.questions.order( seq: :asc, id: :asc ).pluck( :title )
-					question_index_lookup = @survey.questions.order( seq: :asc, id: :asc ).pluck( :id ).map.with_index(3).to_h
+					question_index_lookup = @survey.questions.order( seq: :asc, id: :asc ).pluck( :id ).map.with_index(headers.count).to_h
 
 					csv << headers
 
