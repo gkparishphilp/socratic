@@ -33,7 +33,7 @@ module Socratic
 
 		private
 			def get_question
-				@question = Question.friendly.find params[:id]
+				@question = Question.find( params[:id] )
 			end
 
 			def question_params

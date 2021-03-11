@@ -21,7 +21,7 @@
 				Delete
 
 
-	= form_for @question, url: question_admin_path( @question ) do |f|
+	= form_for @question, url: question_admin_path( @question.id ) do |f|
 
 		.row
 			.col-xs-8

@@ -106,7 +106,7 @@ SQL
 		private
 
 			def get_survey
-				@survey = Survey.friendly.find( params[:id] )
+				@survey = Survey.find( params[:id] )
 			end
 
 			def survey_params

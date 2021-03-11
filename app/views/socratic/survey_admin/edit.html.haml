@@ -27,7 +27,7 @@
 				%i.fa.fa-trash
 				Delete
 
-	= form_for @survey, url: survey_admin_path( @survey ) do |f|
+	= form_for @survey, url: survey_admin_path( @survey.id ) do |f|
 
 		.row
 			.col-xs-8
