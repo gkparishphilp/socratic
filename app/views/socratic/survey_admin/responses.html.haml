@@ -20,7 +20,7 @@
 						Responses
 						= "(#{pluralize @surveyings.total_count, 'Response'})"
 		.col-xs-2
-			%a.btn.btn-success{ href: responses_survey_admin_path( @survey, format: :csv, params: request.query_parameters ) }
+			%a.btn.btn-success{ href: responses_survey_admin_path( @survey.id, format: :csv, params: request.query_parameters ) }
 				%i.fa.fa-download
 				CSV
 			
@@ -28,7 +28,7 @@
 		.col-xs-6
 			= raw paginate @surveyings
 		.col-xs-6
-			= form_tag responses_survey_admin_path( @survey ), method: :get, class: 'pull-right form-inline' do
+			= form_tag responses_survey_admin_path( @survey.id ), method: :get, class: 'pull-right form-inline' do
 				= select_tag :status, options_from_collection_for_select( Socratic::Surveying.statuses, :first, :first, params[:status] ), { prompt: "-- All --", class: 'form-control' }
 				= submit_tag 'Search', class: 'btn btn-primary'
 
@@ -44,21 +44,21 @@
 						Last Name
 					%th
 						Status
-						%a{ href: responses_survey_admin_path( @survey, sort_by: 'status', sort_dir: 'asc' ) }
+						%a{ href: responses_survey_admin_path( @survey.id, sort_by: 'status', sort_dir: 'asc' ) }
 							%i.fa.fa-arrow-up
-						%a{ href: responses_survey_admin_path( @survey, sort_by: 'status', sort_dir: 'desc' ) }
+						%a{ href: responses_survey_admin_path( @survey.id, sort_by: 'status', sort_dir: 'desc' ) }
 							%i.fa.fa-arrow-down
 					%th
 						Created
-						%a{ href: responses_survey_admin_path( @survey, sort_by: 'created_at', sort_dir: 'asc' ) }
+						%a{ href: responses_survey_admin_path( @survey.id, sort_by: 'created_at', sort_dir: 'asc' ) }
 							%i.fa.fa-arrow-up
-						%a{ href: responses_survey_admin_path( @survey, sort_by: 'created_at', sort_dir: 'desc' ) }
+						%a{ href: responses_survey_admin_path( @survey.id, sort_by: 'created_at', sort_dir: 'desc' ) }
 							%i.fa.fa-arrow-down
 					%th
 						Completed
-						%a{ href: responses_survey_admin_path( @survey, sort_by: 'completed_at', sort_dir: 'asc' ) }
+						%a{ href: responses_survey_admin_path( @survey.id, sort_by: 'completed_at', sort_dir: 'asc' ) }
 							%i.fa.fa-arrow-up
-						%a{ href: responses_survey_admin_path( @survey, sort_by: 'completed_at', sort_dir: 'desc' ) }
+						%a{ href: responses_survey_admin_path( @survey.id, sort_by: 'completed_at', sort_dir: 'desc' ) }
 							%i.fa.fa-arrow-down
 					%th
 				%tbody
@@ -85,12 +85,12 @@
 										%b.caret
 									%ul.dropdown-menu
 										%li
-											%a{ href: surveying_admin_path( surveying ) }
+											%a{ href: surveying_admin_path( surveying.id ) }
 												%i.fa.fa-eye
 												View
 										%li.divider
 										%li
-											%a{ href: surveying_admin_path( surveying ), data: { method: 'delete', confirm: 'Are you sure?' } }
+											%a{ href: surveying_admin_path( surveying.id ), data: { method: 'delete', confirm: 'Are you sure?' } }
 												%i.fa.fa-trash-o
 												Delete!
 				
