@@ -15,11 +15,11 @@
 						= @survey.title
 
 		.col-xs-4
-			%a.btn.btn-info{ href: responses_survey_admin_path( @survey ) }
+			%a.btn.btn-info{ href: responses_survey_admin_path( @survey.id ) }
 				= pluralize @survey.surveyings.count, 'Response'
 				%i.fa.fa-eye
 
-			%a.btn.btn-warning{ href: clone_survey_admin_path( @survey ), data: { method: :post } }
+			%a.btn.btn-warning{ href: clone_survey_admin_path( @survey.id ), data: { method: :post } }
 				Clone
 				%i.fa.fa-copy
 
