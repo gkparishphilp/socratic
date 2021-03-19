@@ -6,13 +6,13 @@ module Socratic
 
 		def clone
 			cloned = @survey.clone!
-			redirect_to edit_survey_admin_path( cloned )
+			redirect_to edit_survey_admin_path( cloned.id )
 		end
 
 
 		def create
 			@survey = Survey.create( survey_params )
-			redirect_to edit_survey_admin_path( @survey )
+			redirect_to edit_survey_admin_path( @survey.id )
 			#redirect_back fallback_location: '/survey_admin'
 		end
 
