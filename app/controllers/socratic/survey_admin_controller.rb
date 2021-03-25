@@ -44,7 +44,7 @@ module Socratic
 			if request.format.to_s == 'text/csv'
 				@csv = CSV.generate( headers: true ) do |csv|
 					prefix_headers = [ 'Email', 'First Name', 'Last Name', 'Created', 'Completed' ]
-					headers = prefix_headers + @survey.questions.order( seq: :asc, id: :asc ).pluck( :title )
+					headers = prefix_headers + @survey.questions.order( seq: :asc, id: :asc ).pluck( :data_label )
 					question_index_lookup = @survey.questions.order( seq: :asc, id: :asc ).pluck( :id ).map.with_index(prefix_headers.count).to_h
 
 					csv << headers
@@ -90,7 +90,7 @@ SQL
 
 			respond_to do |format|
 				format.html
-				format.csv { send_data @csv, filename: "survey_data-#{Date.today}.csv" }
+				format.csv { send_data @csv, filename: "#{@survey.title}-survey_data-#{Date.today}.csv" }
 			end
 
 
