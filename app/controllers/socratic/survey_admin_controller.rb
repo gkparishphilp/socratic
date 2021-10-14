@@ -60,7 +60,7 @@ LEFT JOIN socratic_responses r ON r.surveying_id = sing.id
 LEFT JOIN socratic_questions q ON q.id = r.question_id
 LEFT JOIN socratic_surveys s ON q.survey_id = s.id
 WHERE sing.survey_id = #{@survey.id}
-GROUP BY q.id, u.id, sing.id
+GROUP BY q.id, u.id, sing.id, bp.id
 ORDER BY u.email ASC, q.seq ASC
 SQL
 
