@@ -81,6 +81,11 @@
 						= f.check_box :require_login
 						= f.label :require_login
 
+					.form-group
+						= f.label :ttl
+						= f.text_field :ttl
+
+						= "* -1 is one response forever; 0 is every response creates new; any other integer is hours"
 
 					.form-group
 						= f.label :status

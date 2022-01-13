@@ -1,5 +1,9 @@
 .form-group
-	= label_tag "responses[#{question.slug}][prompt_id]", question.title
+	- if question.is_required?
+		= label_tag "responses[#{question.slug}][prompt_id]", '* ' + question.title
+	- else
+		= label_tag "responses[#{question.slug}][prompt_id]", question.title
+
 	- question.prompts.order( seq: :asc ).each do |prompt|
 		%div{ style: 'margin-bottom:-20px;' }
 			%label{ style: 'font-weight: normal;line-height:1.5em;' }

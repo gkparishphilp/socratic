@@ -75,6 +75,7 @@ class SocraticMigration < ActiveRecord::Migration[5.1]
 			t.datetime 		:starts_at
 			t.datetime 		:ends_at
 			t.boolean 		:require_login
+			t.integer 		:ttl, 				default: -1
 
 			t.timestamps
 		end

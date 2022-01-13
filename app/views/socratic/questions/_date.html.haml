@@ -1,3 +1,6 @@
 .form-group
-	= label_tag "responses[#{question.slug}][content]", question.title
+	- if question.is_required?
+		= label_tag "responses[#{question.slug}][content]", '* ' + question.title
+	- else
+		= label_tag "responses[#{question.slug}][content]", question.title
 	= date_field_tag "responses[#{question.slug}][content]", @surveying.responses.where( question: question ).last.try( :content ), class: 'form-control'
