@@ -14,6 +14,7 @@ module Socratic
 				if self.prompt.present?
 					self.content = self.prompt.title
 					self.content ||= self.prompt.content
+					self.score = self.prompt.score
 				end
 			end
 	end

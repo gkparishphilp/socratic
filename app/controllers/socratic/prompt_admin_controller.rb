@@ -24,7 +24,7 @@ module Socratic
 
 		private
 			def prompt_params
-				params.require( :prompt ).permit( :question_id, :title, :content, :seq, :is_correct, :value )
+				params.require( :prompt ).permit( :question_id, :title, :content, :seq, :is_correct, :score )
 			end
 
 

@@ -7,7 +7,7 @@ class SocraticMigration < ActiveRecord::Migration[5.1]
 			t.string 		:title
 			t.text 			:content
 			t.integer 		:seq
-			t.integer 		:value
+			t.integer 		:score, default: 0
 			t.boolean 		:is_correct
 			t.string 		:prompt_type, default: 'text'
 			t.timestamps
@@ -41,6 +41,7 @@ class SocraticMigration < ActiveRecord::Migration[5.1]
 			t.references 	:question
 			t.references 	:prompt
 			t.text 			:content
+			t.integer 		:score, default: 0
 			t.text 			:notes
 			t.datetime 		:started_at
 			t.datetime 		:completed_at

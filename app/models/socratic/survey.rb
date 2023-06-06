@@ -51,7 +51,7 @@ module Socratic
 					new_question.prompts.create(
 						content: p.content,
 						seq: p.seq,
-						value: p.value,
+						score: p.score,
 						is_correct: p.is_correct,
 						title: p.title
 					)

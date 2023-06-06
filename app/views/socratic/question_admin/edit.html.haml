@@ -73,6 +73,7 @@
 				%table.table.table-light.table-bordered{ style: 'margin:0;' }
 					%thead
 						%th{ style: 'width: 4em' } Seq
+						%th{ style: 'width: 4em' } Score
 						%th Title
 						%th{ style: 'width: 10em' }
 						%th{ style: 'width: 4em' }
@@ -88,7 +89,7 @@
 									%td
 										= f.text_field :seq, class: 'form-control'
 									%td 
-										= f.text_field :value, class: 'form-control'
+										= f.text_field :score, class: 'form-control'
 									%td
 										= f.text_field :title, class: 'form-control'
 									%td
@@ -119,7 +120,7 @@
 								%td
 									= f.text_field :seq, class: 'form-control'
 								%td 
-									= f.text_field :value, class: 'form-control'
+									= f.text_field :score, class: 'form-control'
 								%td
 									= f.text_field :title, class: 'form-control'
 								%td
