@@ -41,7 +41,7 @@
 	
 .star-rating
 	.star-rating-wrap
-		- question.prompts.order( value: :desc ).each do |prompt|
+		- question.prompts.order( score: :desc ).each do |prompt|
 			= radio_button_tag "responses[#{question.slug}][prompt_id]", prompt.id, @surveying.responses.where( question: question ).last.try( :prompt_id ) == prompt.id, class: 'star-rating-input', style: 'display:none;'
 			%label{ for: "responses_#{question.slug}_prompt_id_#{prompt.id}", class: 'star-rating-ico far fa-star fa-lg' }
 
