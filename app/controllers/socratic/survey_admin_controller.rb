@@ -46,8 +46,8 @@ module Socratic
 				@csv = CSV.generate( headers: true ) do |csv|
 					prefix_headers = [ 'Email', 'First Name', 'Last Name', 'Created', 'Completed', 'gender', 'dob', 'street', 'street2', 'city', 'state', 'zip', 'country', 'phone', 'height', 'weight' ]
 
-					headers = prefix_headers + @survey.questions.order( seq: :asc, id: :asc ).pluck( :data_label )
-					question_index_lookup = @survey.questions.order( seq: :asc, id: :asc ).pluck( :id ).map.with_index(prefix_headers.count).to_h
+					headers = prefix_headers + @survey.questions.order( seq: :asc, id: :asc ).pluck( :data_label ).collect{|data_label| [data_label,"#{data_label}-score"] }.flatten
+					question_index_lookup = @survey.questions.order( seq: :asc, id: :asc ).pluck( :id ).collect{|id| [id,nil] }.flatten.map.with_index(prefix_headers.count).to_h
 
 					csv << headers
 
@@ -76,8 +76,9 @@ SQL
 						question_id = row['question_id']
 
 						if question_id.present?
-							question_row_index = question_index_lookup[question_id]
+							question_row_index = question_index_lookup[question_id] #(question_index_lookup[question_id] - prefix_headers.count) * 2 + prefix_headers.count
 							surveying_row[question_row_index] = row['content']
+							surveying_row[question_row_index+1] = row['score']
 						end
 
 						surveying_rows[row['surveying_id']] = surveying_row
