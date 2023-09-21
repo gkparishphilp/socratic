@@ -77,7 +77,7 @@ SQL
 
 						if question_id.present?
 							question_row_index = question_index_lookup[question_id]
-							surveying_row[question_row_index] = row['content']
+							surveying_row[question_row_index] = "#{row['content']} | #{row['score'] }"
 						end
 
 						surveying_rows[row['surveying_id']] = surveying_row
