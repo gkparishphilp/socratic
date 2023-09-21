@@ -55,6 +55,7 @@
 					%th Question
 					%th Data Label
 					%th Response
+					%th Score?
 				%tbody
 					- @survey.questions.each do |question|
 						%tr
@@ -67,3 +68,5 @@
 
 							%td
 								= @surveying.responses.where( question: question ).pluck( :content ).reject{ |c| c.nil? }.join( ', ' )
+							%td 
+								= @surveying.responses.where( question: question ).pluck( :score ).reject{ |c| c.nil? }.join( ', ' )

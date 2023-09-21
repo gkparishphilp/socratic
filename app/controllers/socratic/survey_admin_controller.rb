@@ -76,9 +76,14 @@ SQL
 						question_id = row['question_id']
 
 						if question_id.present?
+<<<<<<< HEAD
 							question_row_index = question_index_lookup[question_id] #(question_index_lookup[question_id] - prefix_headers.count) * 2 + prefix_headers.count
 							surveying_row[question_row_index] = row['content']
 							surveying_row[question_row_index+1] = row['score']
+=======
+							question_row_index = question_index_lookup[question_id]
+							surveying_row[question_row_index] = "#{row['content']} | #{row['score'] }"
+>>>>>>> b305434 (- verison bump again and try to glom score into content output)
 						end
 
 						surveying_rows[row['surveying_id']] = surveying_row
