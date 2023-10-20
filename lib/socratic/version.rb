@@ -1,3 +1,3 @@
 module Socratic
-  VERSION = '3.2.21'
+  VERSION = '4.0.0'
 end

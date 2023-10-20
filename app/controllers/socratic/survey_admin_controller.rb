@@ -35,7 +35,7 @@ module Socratic
 			sort_by = params[:sort_by] || 'created_at'
 			sort_dir = params[:sort_dir] || 'desc'
 
-			@surveyings = @survey.surveyings.order( "#{sort_by} #{sort_dir}" )
+			@surveyings = @survey.surveyings.order( Arel.sql("#{sort_by} #{sort_dir}") )
 
 			if params[:status].present? && params[:status] != 'all'
 				@surveyings = eval "@surveyings.#{params[:status]}"
@@ -105,7 +105,7 @@ SQL
 			sort_by = params[:sort_by] || 'created_at'
 			sort_dir = params[:sort_dir] || 'desc'
 
-			@surveyings = @survey.surveyings.order( "#{sort_by} #{sort_dir}" )
+			@surveyings = @survey.surveyings.order( Arel.sql("#{sort_by} #{sort_dir}") )
 
 			if params[:status].present? && params[:status] != 'all'
 				@surveyings = eval "@surveyings.#{params[:status]}"
