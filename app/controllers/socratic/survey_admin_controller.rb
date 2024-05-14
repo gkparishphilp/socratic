@@ -54,11 +54,11 @@ module Socratic
 					sql = <<-SQL
 SELECT sing.id as "surveying_id", u.id as "user_id", u.email, u.first_name, u.last_name, bp.gender, bp.dob, bp.street, bp.street2, bp.city, bp.state, bp.zip, bp.country, bp.phone, bp.height, bp.weight, sing.created_at, sing.completed_at, q.seq, r.content, r.score, q.data_label, q.id "question_id"
 FROM users u
-INNER JOIN beta_profiles bp ON bp.user_id = u.id
 INNER JOIN socratic_surveyings sing ON sing.user_id = u.id
 LEFT JOIN socratic_responses r ON r.surveying_id = sing.id
 LEFT JOIN socratic_questions q ON q.id = r.question_id
 LEFT JOIN socratic_surveys s ON q.survey_id = s.id
+LEFT JOIN beta_profiles bp ON bp.user_id = u.id
 WHERE sing.survey_id = #{@survey.id}
 GROUP BY q.id, u.id, sing.id, bp.id, r.id
 ORDER BY u.email ASC, q.seq ASC
