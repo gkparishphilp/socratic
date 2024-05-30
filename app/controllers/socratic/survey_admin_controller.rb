@@ -35,6 +35,8 @@ module Socratic
 			sort_by = params[:sort_by] || 'created_at'
 			sort_dir = params[:sort_dir] || 'desc'
 
+			result_mode = params[:result_mode] || 'both'
+
 			@surveyings = @survey.surveyings.order( Arel.sql("#{sort_by} #{sort_dir}") )
 
 			if params[:status].present? && params[:status] != 'all'
@@ -46,8 +48,17 @@ module Socratic
 				@csv = CSV.generate( headers: true ) do |csv|
 					prefix_headers = [ 'Email', 'First Name', 'Last Name', 'Created', 'Completed', 'gender', 'dob', 'street', 'street2', 'city', 'state', 'zip', 'country', 'phone', 'height', 'weight' ]
 
-					headers = prefix_headers + @survey.questions.order( seq: :asc, id: :asc ).pluck( :data_label ).collect{|data_label| [data_label,"#{data_label}-score"] }.flatten
-					question_index_lookup = @survey.questions.order( seq: :asc, id: :asc ).pluck( :id ).collect{|id| [id,nil] }.flatten.map.with_index(prefix_headers.count).to_h
+					headers = prefix_headers + @survey.questions.order( seq: :asc, id: :asc ).pluck( :data_label ).collect do |data_label|
+						row = [data_label]
+						row << "#{data_label}-score" if %w(both).include? result_mode
+						row
+					end.flatten
+
+					question_index_lookup = @survey.questions.order( seq: :asc, id: :asc ).pluck( :id ).collect do |id|
+						row = [id]
+						row << nil if %w(both).include? result_mode
+						row
+					end.flatten.map.with_index(prefix_headers.count).to_h
 
 					csv << headers
 
@@ -77,7 +88,8 @@ SQL
 
 						if question_id.present?
 							question_row_index = question_index_lookup[question_id]
-							surveying_row[question_row_index] = "#{row['content']} | #{row['score'] }"
+							surveying_row[question_row_index] = row['content'] if %w(content both).include? result_mode
+							surveying_row[question_row_index+1] = row['score'] if %w(score both).include? result_mode
 						end
 
 						surveying_rows[row['surveying_id']] = surveying_row
