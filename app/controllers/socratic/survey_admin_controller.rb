@@ -9,6 +9,52 @@ module Socratic
 			redirect_to edit_survey_admin_path( cloned.id )
 		end
 
+		# This action takes the selected survey and migrates all it's properties into the new system as a survey template
+		def clone_to_new_system
+			new_survey = ::Survey.create(
+				title: @survey.title,
+				description: @survey.description,
+				survey_type: @survey.survey_type,
+				template: @survey.template,
+				layout: @survey.layout,
+				ttl: @survey.ttl,
+				preface: @survey.preface,
+				thank_you_copy: @survey.thank_you_copy,
+				require_login: @survey.require_login,
+				status: 'draft'
+			)
+
+			@survey.questions.order( seq: :asc ).each do |q|
+				new_question = new_survey.questions.create(
+					title: q.title,
+					data_label: q.data_label,
+					content: q.content,
+					question_ui: q.question_ui,
+					seq: q.seq,
+					page_num: 1,
+					is_required: q.is_required,
+					question_group: q.question_group,
+					bind_data_field: q.bind_data_field,
+					default_prompt: q.default_prompt,
+					description: q.description,
+					preface: q.preface,
+					question_style: q.question_style,
+					question_classes: q.question_classes
+				)
+				q.prompts.order( seq: :asc ).each do |p|
+					new_question.prompts.create(
+						content: p.content,
+						seq: p.seq,
+						score: p.score,
+						is_correct: p.is_correct,
+						title: p.title
+					)
+				end
+			end
+
+			redirect_back fallback_location: edit_survey_admin_path( @survey.id ), notice: "Survey migrated to new system as '#{new_survey.title}'"
+		end
+
 
 		def create
 			@survey = Survey.create( survey_params )
